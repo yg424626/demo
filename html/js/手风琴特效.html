@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>手风琴特效</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul{
+            list-style: none;
+        }
+        #box{
+            width: 1150px;
+            height: 400px;
+            margin: 50px auto;
+            border: 1px solid red;
+            overflow: hidden;
+        }
+        #box li{
+            width: 240px;
+            height: 400px;
+            float: left;
+        }
+        #box ul{
+            width: 1300px;
+        }
+    </style>
+</head>
+<body>
+<div id="box">
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
+<script>
+  var box = document.getElementById("box");
+    var ul = box.children[0];
+    var lis = ul.children;
+    //动态绑定背景图
+    for(var i=0;i<lis.length;i++){
+        lis[i].style.backgroundImage = "url(../../images/image-js/"+(i+1)+".jpg)";
+        //鼠标经过当前的li，所有的li都变为宽100，当前的例变为宽800
+        lis[i].onmouseover = function(){
+            for(var j=0;j<lis.length;j++){
+                animate(lis[j],{"width":100});
+            }
+            animate(this,{"width":800});
+        }
+    }
+    //鼠标离开盒子，所有的li宽度渐渐地还原为240
+    box.onmouseout = function(){
+        for(var i=0;i<lis.length;i++){
+            animate(lis[i],{"width":240});
+        }
+    }
+    //封装缓存动画
+    function animate(obj,json){
+        clearInterval(obj.timer);
+        obj.timer = setInterval(function(){
+            var flag = false;
+            for(var k in json){
+                //获取任意属性的当前值
+                var leader = parseInt(getStyle(obj,k)) || 0;
+                var target = json[k];//目标值
+                var step = (target - leader) / 10; //速度
+                //因为获取计算后的样式会就近取整，当step<0.5的时候就会一直重复当前的
+                //数值,所以需要大于0时向上取整，小于0时向下取整
+                step = step >0? Math.ceil(step) : Math.floor(step);
+                leader += step;
+                obj.style[k] = leader + 'px';
+                console.log(123);
+                if(leader == target){
+                    clearInterval(obj.timer);
+                    flag = true;
+                }
+
+            }
+        },25);
+    }
+//封装获取计算后的样式
+  function getStyle(obj, attr) {
+      if (obj.currentStyle) {
+          return obj.currentStyle[attr];
+      } else {
+          return window.getComputedStyle(obj, null)[attr];
+      }
+  }
+</script>
+</body>
+</html>

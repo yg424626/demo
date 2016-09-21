@@ -1,1 +1,200 @@
-dddddddddfff	
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS3 前端知识</title>
+    <style>
+      body{
+          margin: 0;
+          padding: 0;
+          background: #080e24 url(./images/image-CSS3/bg.jpg) repeat;
+      }
+        ul{
+            width: 830px;
+            height: 830px;
+            margin: 0 auto;
+            position: relative;
+            list-style: none;
+        }
+        ul li{
+            border: 2px solid #394057;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-sizing: border-box;
+
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+            animation-name: rotate;
+        }
+        ul li a{
+            display: block;
+            position: absolute;
+            border-radius: 50%;
+            text-align: center;
+            top: 0;
+            font-size: 16px;
+            text-decoration: none;
+            color: red;
+
+        }
+
+        ul li:nth-child(1){
+            width: 60px;
+            height: 60px;
+            border: none;
+            box-shadow: 0 0 50px #c90;
+            background-color: #c90;
+            animation-duration: 10s;
+
+        }
+        ul li:nth-child(2){
+            width: 130px;
+            height: 130px;
+            animation-duration: 18s;
+            z-index: 6;
+
+        }
+        ul li:nth-child(2) a{
+            width: 50px;
+            height: 50px;
+            line-height:50px;
+            background-color: yellow;
+            left: 80px;
+
+        }
+
+        ul li:nth-child(3){
+            width: 230px;
+            height: 230px;
+            animation-duration: 25s;
+            z-index: 5;
+
+        }
+        ul li:nth-child(3) a{
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            background-color: blue;
+            left: 12px;
+            color: #fff;
+
+        }
+        ul li:nth-child(4){
+            width: 380px;
+            height: 380px;
+            animation-duration: 32s;
+            z-index: 4;
+
+        }
+      ul li:nth-child(4) a {
+          width: 60px;
+          height: 60px;
+          line-height: 60px;
+          background-color: green;
+          left: 216px;
+          top: -17px;
+          color: blue;
+
+      }
+
+      ul li:nth-child(5){
+          width: 530px;
+          height: 530px;
+          background-image: url(./images/image-CSS3/asteroids_meteorids.png);
+          background-size: cover;
+          animation-duration: 45s;
+          z-index: 3;
+
+      }
+      ul li:nth-child(5) a {
+          width: 66px;
+          height: 66px;
+          line-height: 66px;
+          background-color: skyblue;
+          left: 88px;
+          top: 15px;
+          color: yellow;
+
+      }
+      ul li:nth-child(6) {
+          width: 690px;
+          height: 690px;
+          animation-duration: 50s;
+          z-index: 2;
+
+      }
+
+      ul li:nth-child(6) a {
+          width: 60px;
+          height: 60px;
+          line-height: 60px;
+          background-color: #CCC;
+          left: 2px;
+          top: 200px;
+
+      }
+      ul li:nth-child(7) {
+          width: 830px;
+          height: 830px;
+          animation-duration: 60s;
+      }
+
+      ul li:nth-child(7)  a {
+          color: pink;
+          width: 74px;
+          height: 74px;
+          line-height: 74px;
+          background-color: green;
+          left: 300px;
+          top: -22px;
+
+      }
+      /*定义动画*/
+        @-webkit-keyframes rotate {
+            0%{
+                transform: translate(-50%,-50%) rotate(0deg);
+            }
+            100%{
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+    </style>
+    <script>
+       window.onload = function(){
+           var stop = document.getElementsByTagName('a');
+          for(var i= 0;i<stop.length;i++){
+            stop[i].onmouseover = function(){
+                this.style.cursor = "pointer";
+                //让当前动画停止在当前的状态
+               this.parentNode.style.animationPlayState = "paused";
+            }
+              stop[i].onmouseout = function(){
+                  //让当前动画运行
+                  this.parentNode.style.animationPlayState = "running";
+              }
+          }
+       }
+    </script>
+</head>
+<body>
+<ul>
+    <li></li>
+    <li><a href="html/js/旋转木马.html" >原生JS</a></li>
+    <li><a href="#">HTML5</a></li>
+    <li><a href="#">移动WEB</a></li>
+    <li><a href="#">面向对象</a></li>
+    <li><a href="#">canvas</a></li>
+    <li><a href="#" >AngularJS</a></li>
+</ul>
+</body>
+</html>
+<!--总结  难点-->
+<!--1、因为li标签的HTML结构自上而下的大小是逐渐增大的，当同时都用了定位以后会让
+最下面的li标签把上面的li标签全部覆盖，导致无法对其他的li标签进行操作，需要重新
+设置让li标签的层级从下至上逐渐增大-->
+<!--2、当鼠标经过每个a标签时让当前的动画停止在当前状态，需要设置一个
+animation-play-state=paused;再次运行：animation-play-state=running; -->
